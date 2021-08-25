@@ -2,8 +2,26 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  """
+  One of the main node for the user to enter the graph.
+  Conventionally used to get data from the server,
+  just like GET request,
+  but can also be used to change data in server/DB.
+  If multiple queries are given they are ran in parallel.
+  """
   type Query {
     hello: String!
+  }
+
+  """
+  One of the main node for the user to enter the graph.
+  Conventionally used to change data in the server/DB,
+  just like POST, PUT, DELETE, etc. request,
+  but can also be used to just fetch data from server.
+  If multiple mutations are given they are ran in series.
+  """
+  type Mutation {
+    createUser(data: CreateUserInput!): User
   }
 
   enum Gender {
@@ -23,6 +41,16 @@ const typeDefs = gql`
 
     "Full name of the user"
     name: String!
+  }
+
+  input CreateUserInput {
+    email: String!
+    password: String!
+    confirmPassword: String!
+    firstName: String!
+    middleName: String
+    lastName: String!
+    gender: Gender!
   }
 `;
 
