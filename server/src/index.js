@@ -12,6 +12,7 @@ const resolvers = require('./resolvers');
 
 // dataSources
 const UserAPI = require('./dataSources/userAPI');
+const ProjectAPI = require('./dataSources/projectAPI');
 
 // utils
 const prisma = require('./utils/prisma');
@@ -44,7 +45,8 @@ const server = new ApolloServer({
     return { user };
   },
   dataSources: () => ({
-    userAPI: new UserAPI(prisma)
+    userAPI: new UserAPI(prisma),
+    projectAPI: new ProjectAPI(prisma)
   })
 });
 
