@@ -18,6 +18,9 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.3.2",
-    "prisma": "^2.30.0"
+    "prisma": "2.30.0"
+  },
+  "dependencies": {
+    "@prisma/client": "2.30.0"
   }
 }
