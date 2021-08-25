@@ -33,6 +33,21 @@ class ProjectAPI extends DataSource {
 
     return project;
   }
+
+  async addMember(projectId, userId) {
+    const updated = await this.store.project.update({
+      where: { id: projectId },
+      data: {
+        members: {
+          connect: {
+            id: userId
+          }
+        }
+      }
+    });
+
+    return updated;
+  }
 }
 
 module.exports = ProjectAPI;
