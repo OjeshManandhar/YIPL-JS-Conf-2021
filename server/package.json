@@ -13,5 +13,8 @@
     "sqlite"
   ],
   "author": "Ojesh Manandhar",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
 }
