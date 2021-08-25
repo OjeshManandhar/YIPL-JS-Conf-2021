@@ -1,16 +1,29 @@
 // packages
-const { UserInputError } = require('apollo-server');
+const { UserInputError, AuthenticationError } = require('apollo-server');
 
 // utils
 const { encode } = require('./../utils/token');
 
 const query = {
-  login: (parent, args) => {
-    const { email, password } = args;
+  login: async (_, { email, password }, { dataSources }) => {
+    const foundUser = await dataSources.userAPI.findByEmail(email, true);
 
-    console.log('login:', email, password);
+    if (!foundUser) {
+      throw new AuthenticationError('Invalid email or password');
+    }
 
-    return null;
+    if (foundUser.password !== password) {
+      throw new AuthenticationError('Invalid email or password');
+    }
+
+    foundUser.password = '';
+
+    const token = encode(foundUser);
+
+    return {
+      token,
+      user: foundUser
+    };
   }
 };
 
