@@ -14,10 +14,24 @@ class ProjectAPI extends DataSource {
     this.context = config.context;
   }
 
-  async crate(data) {
+  async create(data) {
     const created = await this.store.project.create({ data });
 
     return created;
+  }
+
+  async list() {
+    const projects = await this.store.project.findMany();
+
+    return projects;
+  }
+
+  async findById(id) {
+    const project = await this.store.project.findUnique({
+      where: { id }
+    });
+
+    return project;
   }
 }
 
