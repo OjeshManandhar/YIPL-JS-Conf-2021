@@ -30,4 +30,14 @@ const mutation = {
   }
 };
 
-module.exports = { query, mutation };
+const type = {
+  User: {
+    name: parent => {
+      const { firstName, middleName, lastName } = parent;
+
+      return `${firstName} ${middleName || ''} ${lastName}`;
+    }
+  }
+};
+
+module.exports = { query, mutation, type };
