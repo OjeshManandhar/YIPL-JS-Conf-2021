@@ -7,7 +7,9 @@ const query = {
       throw new ForbiddenError('Log in first');
     }
 
-    const project = await dataSources.projectAPI.findById(id);
+    const _id = parseInt(id, 10);
+
+    const project = await dataSources.projectAPI.findById(_id);
 
     return project;
   },
