@@ -39,8 +39,12 @@ class ProjectAPI extends DataSource {
       where: { id: projectId },
       data: {
         members: {
-          connect: {
-            id: userId
+          create: {
+            user: {
+              connect: {
+                id: userId
+              }
+            }
           }
         }
       }
