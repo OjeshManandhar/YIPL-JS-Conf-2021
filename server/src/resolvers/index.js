@@ -1,5 +1,6 @@
 // resolvers
 const users = require('./users');
+const projects = require('./projects');
 
 const resolvers = {
   Query: {
@@ -14,12 +15,14 @@ const resolvers = {
       gender: 'MALE',
       name: 'name'
     }),
-    ...users.query
+    ...users.query,
+    ...projects.query
   },
   Mutation: {
     // This is needed as it is there in schema
     _empty: () => 'Added to just not make empty type',
-    ...users.mutation
+    ...users.mutation,
+    ...projects.mutation
   },
   ...users.type
 };
