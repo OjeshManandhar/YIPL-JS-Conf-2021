@@ -2,16 +2,13 @@
 require('dotenv').config();
 
 // packages
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
+
+// schemas
+const typeDefs = require('./schemas');
 
 // env
 const { PORT } = require('./env_config');
-
-const typeDefs = gql`
-  type Query {
-    hello: String!
-  }
-`;
 
 const resolvers = {
   Query: {
