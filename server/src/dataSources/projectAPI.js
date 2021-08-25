@@ -52,6 +52,26 @@ class ProjectAPI extends DataSource {
 
     return updated;
   }
+
+  async removeMember(projectId, userId) {
+    const updated = await this.store.project.update({
+      where: { id: projectId },
+      data: {
+        members: {
+          delete: {
+            user: {
+              id: userId
+            },
+            project: {
+              id: projectId
+            }
+          }
+        }
+      }
+    });
+
+    return updated;
+  }
 }
 
 module.exports = ProjectAPI;
