@@ -11,6 +11,7 @@ const typeDefs = gql`
   """
   type Query {
     hello: String!
+    login(email: String!, password: String!): AuthPayload
   }
 
   """
@@ -21,7 +22,7 @@ const typeDefs = gql`
   If multiple mutations are given they are ran in series.
   """
   type Mutation {
-    createUser(data: CreateUserInput!): User
+    createUser(data: CreateUserInput!): AuthPayload
   }
 
   enum Gender {
@@ -41,6 +42,11 @@ const typeDefs = gql`
 
     "Full name of the user"
     name: String!
+  }
+
+  type AuthPayload {
+    token: String!
+    user: User!
   }
 
   input CreateUserInput {
