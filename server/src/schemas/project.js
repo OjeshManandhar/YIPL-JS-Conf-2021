@@ -9,6 +9,7 @@ const project = gql`
 
   extend type Mutation {
     createProject(data: CreateProjectInput!): Project
+    addMember(projectId: ID!, userId: ID!): Project
   }
 
   enum ProjectStatus {
