@@ -59,11 +59,9 @@ class ProjectAPI extends DataSource {
       data: {
         members: {
           delete: {
-            user: {
-              id: userId
-            },
-            project: {
-              id: projectId
+            userId_projectId: {
+              userId,
+              projectId
             }
           }
         }
