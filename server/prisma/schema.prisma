@@ -11,17 +11,17 @@ generator client {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  email          String           @unique
-  password       String
-  firstName      String
-  middleName     String?
-  lastName       String
-  gender         String
+  id         Int              @id @default(autoincrement())
+  email      String           @unique
+  password   String
+  firstName  String
+  middleName String?
+  lastName   String
+  gender     String
   // gender     Gender
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  ProjectMembers ProjectMembers[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  projects   ProjectMembers[]
 }
 
 // enum Gender {
@@ -31,13 +31,13 @@ model User {
 // }
 
 model Project {
-  id             Int              @id @default(autoincrement())
-  title          String
-  description    String?
-  status         String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  ProjectMembers ProjectMembers[]
+  id          Int              @id @default(autoincrement())
+  title       String
+  description String?
+  status      String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  members     ProjectMembers[]
 }
 
 model ProjectMembers {
