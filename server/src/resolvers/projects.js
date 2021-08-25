@@ -60,6 +60,25 @@ const mutation = {
     } catch (err) {
       throw new ApolloError('Something went worng');
     }
+  },
+  removeMember: async (_, { projectId, userId }, { user, dataSources }) => {
+    if (!user) {
+      throw new ForbiddenError('Log in first');
+    }
+
+    const _projectId = parseInt(projectId, 10);
+    const _userId = parseInt(userId, 10);
+
+    try {
+      const updated = await dataSources.projectAPI.removeMember(
+        _projectId,
+        _userId
+      );
+
+      return updated;
+    } catch (err) {
+      throw new ApolloError('Something went worng');
+    }
   }
 };
 
