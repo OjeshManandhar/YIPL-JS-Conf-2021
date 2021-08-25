@@ -1,7 +1,10 @@
 // packages
 const { gql } = require('apollo-server');
 
-const typeDefs = gql`
+// schemas
+const users = require('./users');
+
+const main = gql`
   """
   One of the main node for the user to enter the graph.
   Conventionally used to get data from the server,
@@ -10,8 +13,10 @@ const typeDefs = gql`
   If multiple queries are given they are ran in parallel.
   """
   type Query {
+    "A hello world query"
     hello: String!
-    login(email: String!, password: String!): AuthPayload
+
+    user: User
   }
 
   """
@@ -22,42 +27,9 @@ const typeDefs = gql`
   If multiple mutations are given they are ran in series.
   """
   type Mutation {
-    createUser(data: CreateUserInput!): AuthPayload
-  }
-
-  enum Gender {
-    MALE
-    FEMALE
-    OTHER
-  }
-
-  "The User of the ystem"
-  type User {
-    id: ID!
-    email: String!
-    firstName: String!
-    middleName: String
-    lastName: String!
-    gender: Gender!
-
-    "Full name of the user"
-    name: String!
-  }
-
-  type AuthPayload {
-    token: String!
-    user: User!
-  }
-
-  input CreateUserInput {
-    email: String!
-    password: String!
-    confirmPassword: String!
-    firstName: String!
-    middleName: String
-    lastName: String!
-    gender: Gender!
+    "Added to just not make empty type"
+    _empty: String
   }
 `;
 
-module.exports = typeDefs;
+module.exports = [main, users];
