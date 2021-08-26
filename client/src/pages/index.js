@@ -6,8 +6,8 @@ import SplashScreen from 'components/SplashScreen';
 import CreateAccount from 'components/CreateAccount';
 
 function Home() {
-  const [isLogginIn] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLogginIn, setIsLogginIn] = useState(true);
 
   useEffect(() => {
     // Check token
@@ -17,9 +17,9 @@ function Home() {
   return isLoading ? (
     <SplashScreen />
   ) : isLogginIn ? (
-    <LogIn />
+    <LogIn switch={() => setIsLogginIn(false)} />
   ) : (
-    <CreateAccount />
+    <CreateAccount switch={() => setIsLogginIn(true)} />
   );
 }
 

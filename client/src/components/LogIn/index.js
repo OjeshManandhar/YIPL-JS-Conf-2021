@@ -2,8 +2,9 @@ import { useState, useCallback } from 'react';
 
 // styles
 import * as S from './styles';
+import * as G from 'global/styles';
 
-function LogIn() {
+function LogIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,31 +25,46 @@ function LogIn() {
   );
 
   return (
-    <S.Container>
-      <form onSubmit={submitForm}>
-        <input
-          id='email'
-          name='email'
-          type='email'
-          required
-          autoFocus
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+    <G.FullScreenCenter>
+      <S.Content>
+        <G.Heading>Log In</G.Heading>
 
-        <input
-          id='password'
-          name='password'
-          type='password'
-          required
-          minLength={8}
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <G.Form onSubmit={submitForm}>
+          <G.FormControl>
+            <G.FormLabel htmlFor='email'>Email</G.FormLabel>
+            <G.FormInput
+              id='email'
+              name='email'
+              type='email'
+              required
+              autoFocus
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </G.FormControl>
 
-        <button type='submit'>Log in</button>
-      </form>
-    </S.Container>
+          <G.FormControl>
+            <G.FormLabel htmlFor='password'>Password</G.FormLabel>
+            <G.FormInput
+              id='password'
+              name='password'
+              type='password'
+              required
+              minLength={8}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </G.FormControl>
+
+          <G.Button type='submit'>Log In</G.Button>
+        </G.Form>
+
+        <G.Text>
+          Don&apos;t have an account?{' '}
+          <G.ClickablText onClick={props.switch}>Create Account</G.ClickablText>
+        </G.Text>
+      </S.Content>
+    </G.FullScreenCenter>
   );
 }
 
