@@ -6,16 +6,6 @@ const projects = require('./projects');
 const resolvers = {
   Query: {
     hello: () => 'Hello World',
-    user: () => ({
-      id: 1,
-      email: 'test@test.com',
-      password: 'password',
-      firstName: 'firstName',
-      middleName: 'middleName',
-      lastName: 'lastName',
-      gender: 'MALE',
-      name: 'name'
-    }),
     ...users.query,
     ...projects.query
   },

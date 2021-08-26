@@ -17,8 +17,6 @@ const main = gql`
   type Query {
     "A hello world query"
     hello: String!
-
-    user: User
   }
 
   """
