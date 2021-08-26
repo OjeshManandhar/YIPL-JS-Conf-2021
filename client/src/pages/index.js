@@ -8,6 +8,9 @@ import LogIn from 'components/LogIn';
 import SplashScreen from 'components/SplashScreen';
 import CreateAccount from 'components/CreateAccount';
 
+// utils
+import token from 'utils/token';
+
 // env
 import { APP_NAME } from 'env_config';
 
@@ -22,9 +25,12 @@ function Home() {
     : `Create Account | ${APP_NAME}`;
 
   useEffect(() => {
-    // Check token
-    setTimeout(() => setIsLoading(false), 2.5 * 1000);
-  });
+    if (token.retrieve()) {
+      console.log('navigate to other page');
+    } else {
+      setIsLoading(false);
+    }
+  }, [setIsLoading]);
 
   return (
     <>
