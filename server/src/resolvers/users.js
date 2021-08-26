@@ -48,7 +48,7 @@ const type = {
     name: parent => {
       const { firstName, middleName, lastName } = parent;
 
-      return `${firstName} ${middleName || ''} ${lastName}`;
+      return `${firstName} ${middleName ? middleName + ' ' : ''}${lastName}`;
     }
   }
 };
