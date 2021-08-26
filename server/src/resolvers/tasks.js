@@ -40,7 +40,11 @@ const mutation = {
 const type = {
   Task: {
     creator: () => null,
-    project: () => null
+    project: async ({ id }, _, { dataSources }) => {
+      const project = await dataSources.taskAPI.getProject(id);
+
+      return project;
+    }
   }
 };
 
