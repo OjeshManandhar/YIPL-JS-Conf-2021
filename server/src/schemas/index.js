@@ -4,7 +4,7 @@ const { gql } = require('apollo-server');
 // schemas
 const tasks = require('./tasks');
 const users = require('./users');
-const project = require('./project');
+const projects = require('./projects');
 
 const main = gql`
   """
@@ -34,4 +34,4 @@ const main = gql`
   }
 `;
 
-module.exports = [main, users, project, tasks];
+module.exports = [main, users, projects, tasks];

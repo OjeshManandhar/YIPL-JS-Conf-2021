@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server');
 
-const task = gql`
+const tasks = gql`
   extend type Mutation {
     createTask(data: CreateTaskInput!): Task
     closeTask(id: ID!): Task
@@ -28,4 +28,4 @@ const task = gql`
   }
 `;
 
-module.exports = task;
+module.exports = tasks;

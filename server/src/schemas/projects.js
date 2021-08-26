@@ -1,7 +1,7 @@
 // packages
 const { gql } = require('apollo-server');
 
-const project = gql`
+const projects = gql`
   extend type Query {
     project(id: ID!): Project
     listProjects: [Project!]
@@ -34,4 +34,4 @@ const project = gql`
   }
 `;
 
-module.exports = project;
+module.exports = projects;
