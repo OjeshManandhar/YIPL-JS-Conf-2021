@@ -83,6 +83,17 @@ class ProjectAPI extends DataSource {
 
     return updated;
   }
+
+  async listTasks(id) {
+    const project = await this.store.project.findUnique({
+      where: { id },
+      include: { tasks: true }
+    });
+
+    if (!project) return null;
+
+    return project.tasks;
+  }
 }
 
 module.exports = ProjectAPI;

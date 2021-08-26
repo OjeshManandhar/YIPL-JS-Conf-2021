@@ -25,6 +25,7 @@ const projects = gql`
     description: String
     status: ProjectStatus!
     members: [User!]!
+    tasks: [Task!]!
   }
 
   input CreateProjectInput {

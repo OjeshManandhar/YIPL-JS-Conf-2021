@@ -88,6 +88,11 @@ const type = {
       const members = await dataSources.projectAPI.listMembers(parent.id);
 
       return members;
+    },
+    tasks: async ({ id }, _, { dataSources }) => {
+      const tasks = await dataSources.projectAPI.listTasks(id);
+
+      return tasks;
     }
   }
 };
