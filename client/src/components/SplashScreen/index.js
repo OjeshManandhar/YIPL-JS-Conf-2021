@@ -1,9 +1,9 @@
 // styles
-import * as S from './styles';
+import * as G from 'global/styles';
 
 function SplashScreen() {
   return (
-    <S.Container>
+    <G.FullScreenCenter>
       <svg
         width='200px'
         height='200px'
@@ -27,7 +27,7 @@ function SplashScreen() {
           </g>
         </g>
       </svg>
-    </S.Container>
+    </G.FullScreenCenter>
   );
 }
 
