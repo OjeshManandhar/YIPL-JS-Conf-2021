@@ -19,6 +19,21 @@ const mutation = {
     } catch (err) {
       throw new ApolloError('Something went worng');
     }
+  },
+  closeTask: async (_, { id }, { user, dataSources }) => {
+    if (!user) {
+      throw new ForbiddenError('Log in first');
+    }
+
+    const _id = parseInt(id, 10);
+
+    try {
+      const closedTask = await dataSources.taskAPI.close(_id);
+
+      return closedTask;
+    } catch (err) {
+      throw new ApolloError('Something went worng');
+    }
   }
 };
 
