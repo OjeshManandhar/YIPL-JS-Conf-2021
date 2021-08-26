@@ -11,6 +11,7 @@ const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 
 // dataSources
+const TaskAPI = require('./dataSources/taskAPI');
 const UserAPI = require('./dataSources/userAPI');
 const ProjectAPI = require('./dataSources/projectAPI');
 
@@ -45,6 +46,7 @@ const server = new ApolloServer({
     return { user };
   },
   dataSources: () => ({
+    taskAPI: new TaskAPI(prisma),
     userAPI: new UserAPI(prisma),
     projectAPI: new ProjectAPI(prisma)
   })
