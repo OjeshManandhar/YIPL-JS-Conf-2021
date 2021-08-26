@@ -28,6 +28,7 @@ const users = gql`
     "Full name of the user"
     name: String!
     projects: [Project!]!
+    tasks: [Task!]!
   }
 
   type AuthPayload {

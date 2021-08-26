@@ -49,6 +49,17 @@ class UserAPI extends DataSource {
 
     return projects.map(proj => proj.project);
   }
+
+  async listTasks(id) {
+    const user = await this.store.user.findUnique({
+      where: { id },
+      include: { tasks: true }
+    });
+
+    if (!user) return null;
+
+    return user.tasks;
+  }
 }
 
 module.exports = UserAPI;

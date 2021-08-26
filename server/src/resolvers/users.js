@@ -54,6 +54,11 @@ const type = {
       const projects = await dataSources.userAPI.listProjects(id);
 
       return projects;
+    },
+    tasks: async ({ id }, _, { dataSources }) => {
+      const tasks = await dataSources.userAPI.listTasks(id);
+
+      return tasks;
     }
   }
 };
