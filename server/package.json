@@ -4,6 +4,8 @@
   "description": "A simple daily task manager for staff of a company",
   "main": "./src/index.js",
   "scripts": {
+    "start": "nodemon",
+    "prod": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,5 +15,19 @@
     "sqlite"
   ],
   "author": "Ojesh Manandhar",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "prisma": "2.30.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.30.0",
+    "apollo-datasource": "^3.1.0",
+    "apollo-server": "^3.2.0",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.5.1"
+  }
 }
