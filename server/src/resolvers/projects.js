@@ -82,4 +82,14 @@ const mutation = {
   }
 };
 
-module.exports = { query, mutation };
+const type = {
+  Project: {
+    members: async (parent, _, { dataSources }) => {
+      const members = await dataSources.projectAPI.listMembers(parent.id);
+
+      return members;
+    }
+  }
+};
+
+module.exports = { query, mutation, type };

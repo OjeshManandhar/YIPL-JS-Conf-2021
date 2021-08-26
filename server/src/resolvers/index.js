@@ -24,7 +24,8 @@ const resolvers = {
     ...users.mutation,
     ...projects.mutation
   },
-  ...users.type
+  ...users.type,
+  ...projects.type
 };
 
 module.exports = resolvers;
