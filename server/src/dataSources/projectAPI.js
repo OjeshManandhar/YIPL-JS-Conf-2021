@@ -34,6 +34,19 @@ class ProjectAPI extends DataSource {
     return project;
   }
 
+  async listMembers(projectId) {
+    const members = await this.store.projectMembers.findMany({
+      where: {
+        projectId
+      },
+      include: {
+        user: true
+      }
+    });
+
+    return members.map(mem => mem.user);
+  }
+
   async addMember(projectId, userId) {
     const updated = await this.store.project.update({
       where: { id: projectId },
