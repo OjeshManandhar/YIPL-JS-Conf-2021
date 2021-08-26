@@ -49,6 +49,11 @@ const type = {
       const { firstName, middleName, lastName } = parent;
 
       return `${firstName} ${middleName ? middleName + ' ' : ''}${lastName}`;
+    },
+    projects: async ({ id }, _, { dataSources }) => {
+      const projects = await dataSources.userAPI.listProjects(id);
+
+      return projects;
     }
   }
 };
