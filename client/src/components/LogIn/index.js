@@ -56,7 +56,7 @@ function LogIn(props) {
             />
           </G.FormControl>
 
-          <G.Button type='submit'>Log In</G.Button>
+          <G.FormSubmit type='submit'>Log In</G.FormSubmit>
         </G.Form>
 
         <G.Text>

@@ -79,6 +79,10 @@ export const FormInput = styled.input`
   font-size: 1.75rem;
 `;
 
+export const FormSubmit = styled(Button)`
+  margin-top: 1.5rem;
+`;
+
 export const Text = styled.p`
   font-size: 1.6rem;
 `;
