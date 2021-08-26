@@ -11,17 +11,20 @@ generator client {
 }
 
 model User {
-  id         Int              @id @default(autoincrement())
-  email      String           @unique
+  id         Int     @id @default(autoincrement())
+  email      String  @unique
   password   String
   firstName  String
   middleName String?
   lastName   String
   gender     String
   // gender     Gender
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-  projects   ProjectMembers[]
+
+  tasks    Task[]
+  projects ProjectMembers[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // enum Gender {
@@ -31,13 +34,16 @@ model User {
 // }
 
 model Project {
-  id          Int              @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
   description String?
   status      String
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  members     ProjectMembers[]
+
+  tasks   Task[]
+  members ProjectMembers[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ProjectMembers {
@@ -47,4 +53,19 @@ model ProjectMembers {
   projectId Int // relation scalar field (used in the `@relation` attribute above)
 
   @@id([userId, projectId])
+}
+
+model Task {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+  status      String
+
+  creator   User    @relation(fields: [creatorId], references: [id])
+  creatorId Int
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
