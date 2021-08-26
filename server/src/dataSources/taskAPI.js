@@ -53,6 +53,17 @@ class TaskAPI extends DataSource {
     return updatedTask;
   }
 
+  async getCreator(id) {
+    const task = await this.store.task.findUnique({
+      where: { id },
+      include: { creator: true }
+    });
+
+    if (!task) return null;
+
+    return task.creator;
+  }
+
   async getProject(id) {
     const task = await this.store.task.findUnique({
       where: { id },
