@@ -1,4 +1,5 @@
 :root {
+  --white: #fbfbfb;
   --ash-gray: #cad2c5;
   --dark-sea-green: #84a98c;
   --hookers-green: #52796f;
@@ -13,6 +14,9 @@ html {
   line-height: normal;
   font-stretch: normal;
   letter-spacing: normal;
+
+  color: var(--white);
+  background-color: var(--charcoal);
 }
 
 body {
