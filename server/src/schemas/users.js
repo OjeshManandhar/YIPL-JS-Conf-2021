@@ -4,6 +4,7 @@ const { gql } = require('apollo-server');
 const users = gql`
   extend type Query {
     login(email: String!, password: String!): AuthPayload
+    me: User
   }
 
   extend type Mutation {
