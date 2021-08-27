@@ -1,33 +1,52 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+// packages
+import { gql, useMutation } from '@apollo/client';
+
+// utils
+import token from 'utils/token';
 
 // styles
 import * as S from './styles';
 import * as G from 'global/styles';
+
+const CREATE_USER = gql`
+  mutation Mutation($createUserData: CreateUserInput!) {
+    createUser(data: $createUserData) {
+      token
+      user {
+        name
+      }
+    }
+  }
+`;
 
 function CreateAccount(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
+  const [middleName, setMiddleName] = useState(null);
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('MALE');
 
-  const clearForm = useCallback(() => {
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    setFirstName('');
-    setMiddleName('');
-    setLastName('');
-    setGender('');
-  }, []);
+  const [createUser, { loading, error, data }] = useMutation(CREATE_USER);
+
+  // const clearForm = useCallback(() => {
+  //   setEmail('');
+  //   setPassword('');
+  //   setConfirmPassword('');
+  //   setFirstName('');
+  //   setMiddleName('');
+  //   setLastName('');
+  //   setGender('');
+  // }, []);
 
   const submitForm = useCallback(
     e => {
       e.preventDefault();
 
-      console.log('data:', {
+      const createUserData = {
         email,
         password,
         confirmPassword,
@@ -35,9 +54,9 @@ function CreateAccount(props) {
         middleName,
         lastName,
         gender
-      });
+      };
 
-      clearForm();
+      createUser({ variables: { createUserData } });
     },
     [
       email,
@@ -47,9 +66,23 @@ function CreateAccount(props) {
       middleName,
       lastName,
       gender,
-      clearForm
+      createUser
     ]
   );
+
+  useEffect(() => {
+    if (error) {
+      window.alert(error.message);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data) {
+      token.save(data.createUser.token);
+
+      // navigate to tasks
+    }
+  }, [data]);
 
   return (
     <G.FullScreenCenter>
@@ -148,7 +181,9 @@ function CreateAccount(props) {
             />
           </G.FormControl>
 
-          <G.FormSubmit type='submit'>Create Account</G.FormSubmit>
+          <G.FormSubmit type='submit' disabled={loading}>
+            Create Account
+          </G.FormSubmit>
         </G.Form>
 
         <G.Text>
