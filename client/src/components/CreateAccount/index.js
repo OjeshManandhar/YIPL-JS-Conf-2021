@@ -11,7 +11,7 @@ import * as S from './styles';
 import * as G from 'global/styles';
 
 const CREATE_USER = gql`
-  mutation Mutation($createUserData: CreateUserInput!) {
+  mutation CreateUser($createUserData: CreateUserInput!) {
     createUser(data: $createUserData) {
       token
       user {

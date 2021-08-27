@@ -11,7 +11,7 @@ import * as S from './styles';
 import * as G from 'global/styles';
 
 const LOGIN = gql`
-  query Query($email: String!, $password: String!) {
+  query Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
       user {
