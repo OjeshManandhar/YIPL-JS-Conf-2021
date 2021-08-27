@@ -20,7 +20,7 @@ const mutation = {
       throw new ApolloError('Something went worng');
     }
   },
-  closeTask: async (_, { id }, { user, dataSources }) => {
+  completeTask: async (_, { id }, { user, dataSources }) => {
     if (!user) {
       throw new ForbiddenError('Log in first');
     }
@@ -28,9 +28,9 @@ const mutation = {
     const _id = parseInt(id, 10);
 
     try {
-      const closedTask = await dataSources.taskAPI.close(_id);
+      const completedTask = await dataSources.taskAPI.complete(_id);
 
-      return closedTask;
+      return completedTask;
     } catch (err) {
       throw new ApolloError('Something went worng');
     }

@@ -1,5 +1,9 @@
 // packages
-const { UserInputError, AuthenticationError } = require('apollo-server');
+const {
+  ForbiddenError,
+  UserInputError,
+  AuthenticationError
+} = require('apollo-server');
 
 // utils
 const { encode } = require('./../utils/token');
@@ -24,6 +28,13 @@ const query = {
       token,
       user: foundUser
     };
+  },
+  me: async (_, __, { user }) => {
+    if (!user) {
+      throw new ForbiddenError('Log in first');
+    }
+
+    return user;
   }
 };
 
