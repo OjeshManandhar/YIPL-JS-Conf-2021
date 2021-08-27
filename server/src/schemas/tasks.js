@@ -6,16 +6,11 @@ const tasks = gql`
     closeTask(id: ID!): Task
   }
 
-  enum TaskStatus {
-    OPEN
-    CLOSED
-  }
-
   type Task {
     id: ID!
     title: String!
     description: String
-    status: TaskStatus!
+    completed: Boolean!
     creator: User!
     project: Project!
   }
