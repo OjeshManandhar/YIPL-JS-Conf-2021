@@ -3,6 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 // packages
 import { gql, useLazyQuery } from '@apollo/client';
 
+// reactive var
+import User from 'reactiveVar/User';
+
 // utils
 import token from 'utils/token';
 
@@ -15,6 +18,7 @@ const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
+        id
         name
       }
     }
@@ -52,6 +56,13 @@ function LogIn(props) {
   useEffect(() => {
     if (data) {
       token.save(data.login.token);
+
+      const user = {
+        id: data.login.user.id,
+        name: data.login.user.name
+      };
+
+      User(user);
 
       // navigate to tasks
     }

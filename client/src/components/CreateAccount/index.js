@@ -3,6 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 // packages
 import { gql, useMutation } from '@apollo/client';
 
+// reactive var
+import User from 'reactiveVar/User';
+
 // utils
 import token from 'utils/token';
 
@@ -15,6 +18,7 @@ const CREATE_USER = gql`
     createUser(data: $createUserData) {
       token
       user {
+        id
         name
       }
     }
@@ -79,6 +83,13 @@ function CreateAccount(props) {
   useEffect(() => {
     if (data) {
       token.save(data.createUser.token);
+
+      const user = {
+        id: data.login.user.id,
+        name: data.login.user.name
+      };
+
+      User(user);
 
       // navigate to tasks
     }
