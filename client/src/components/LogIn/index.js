@@ -1,28 +1,61 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+// packages
+import { gql, useLazyQuery } from '@apollo/client';
+
+// utils
+import token from 'utils/token';
 
 // styles
 import * as S from './styles';
 import * as G from 'global/styles';
 
+const LOGIN = gql`
+  query Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        name
+      }
+    }
+  }
+`;
+
 function LogIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const clearForm = useCallback(() => {
-    setEmail('');
-    setPassword('');
-  }, []);
+  const [login, { loading, error, data }] = useLazyQuery(LOGIN);
+
+  // const clearForm = useCallback(() => {
+  //   setEmail('');
+  //   setPassword('');
+  // }, []);
 
   const submitForm = useCallback(
     e => {
       e.preventDefault();
 
-      console.log('data:', { email, password });
-
-      clearForm();
+      login({
+        variables: { email, password }
+      });
     },
-    [email, password, clearForm]
+    [email, password, login]
   );
+
+  useEffect(() => {
+    if (error) {
+      window.alert(error.message);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data) {
+      token.save(data.login.token);
+
+      // navigate to tasks
+    }
+  }, [data]);
 
   return (
     <G.FullScreenCenter>
@@ -56,7 +89,9 @@ function LogIn(props) {
             />
           </G.FormControl>
 
-          <G.FormSubmit type='submit'>Log In</G.FormSubmit>
+          <G.FormSubmit type='submit' disabled={loading}>
+            Log In
+          </G.FormSubmit>
         </G.Form>
 
         <G.Text>
