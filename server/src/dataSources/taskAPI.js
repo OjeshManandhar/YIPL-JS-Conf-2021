@@ -30,7 +30,7 @@ class TaskAPI extends DataSource {
     return createdTask;
   }
 
-  async close(id) {
+  async complete(id) {
     if (!this.context.user) {
       throw new ForbiddenError('Log in first');
     }
@@ -47,7 +47,7 @@ class TaskAPI extends DataSource {
 
     const updatedTask = await this.store.task.update({
       where: { id },
-      data: { status: 'CLOSED' }
+      data: { completed: true }
     });
 
     return updatedTask;

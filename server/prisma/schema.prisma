@@ -59,7 +59,7 @@ model Task {
   id          Int     @id @default(autoincrement())
   title       String
   description String?
-  status      String
+  completed   Boolean @default(false)
 
   creator   User    @relation(fields: [creatorId], references: [id])
   creatorId Int

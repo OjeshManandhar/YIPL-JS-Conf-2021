@@ -3,19 +3,14 @@ const { gql } = require('apollo-server');
 const tasks = gql`
   extend type Mutation {
     createTask(data: CreateTaskInput!): Task
-    closeTask(id: ID!): Task
-  }
-
-  enum TaskStatus {
-    OPEN
-    CLOSED
+    completeTask(id: ID!): Task
   }
 
   type Task {
     id: ID!
     title: String!
     description: String
-    status: TaskStatus!
+    completed: Boolean!
     creator: User!
     project: Project!
   }
@@ -23,7 +18,6 @@ const tasks = gql`
   input CreateTaskInput {
     title: String!
     description: String
-    status: TaskStatus!
     projectId: ID!
   }
 `;
