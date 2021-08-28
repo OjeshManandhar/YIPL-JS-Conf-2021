@@ -35,7 +35,7 @@ function CreateAccount(props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState(null);
+  const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('MALE');
 
@@ -60,7 +60,7 @@ function CreateAccount(props) {
         password,
         confirmPassword,
         firstName,
-        middleName,
+        middleName: middleName.length > 0 ? middleName : null,
         lastName,
         gender
       };

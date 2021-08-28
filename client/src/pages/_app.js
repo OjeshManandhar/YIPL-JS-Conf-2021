@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { ApolloProvider } from '@apollo/client';
 
 // components
-import Layout from 'components/Layout';
+import ProtectedLayout from 'components/ProtectedLayout';
 
 // utils
 import client from 'utils/apollo-client';
@@ -26,9 +26,9 @@ function MyApp({ Component, pageProps }) {
       {Component.name === 'Home' ? (
         <Component {...pageProps} />
       ) : (
-        <Layout>
+        <ProtectedLayout>
           <Component {...pageProps} />
-        </Layout>
+        </ProtectedLayout>
       )}
     </ApolloProvider>
   );
