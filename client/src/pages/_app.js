@@ -4,6 +4,9 @@ import Head from 'next/head';
 // packages
 import { ApolloProvider } from '@apollo/client';
 
+// components
+import Layout from 'components/Layout';
+
 // utils
 import client from 'utils/apollo-client';
 
@@ -19,7 +22,14 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>{APP_NAME}</title>
       </Head>
-      <Component {...pageProps} />
+
+      {Component.name === 'Home' ? (
+        <Component {...pageProps} />
+      ) : (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      )}
     </ApolloProvider>
   );
 }
