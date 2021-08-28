@@ -3,20 +3,34 @@ import { useEffect, useState } from 'react';
 // Next
 import Head from 'next/head';
 
+// packages
+import { gql, useLazyQuery } from '@apollo/client';
+
 // components
 import LogIn from 'components/LogIn';
 import SplashScreen from 'components/SplashScreen';
 import CreateAccount from 'components/CreateAccount';
 
 // utils
-import token from 'utils/token';
+import _token from 'utils/token';
 
 // env
 import { APP_NAME } from 'env_config';
 
+const ME = gql`
+  query Me {
+    me {
+      id
+      name
+    }
+  }
+`;
+
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogginIn, setIsLogginIn] = useState(true);
+
+  const [me, { error, data }] = useLazyQuery(ME);
 
   const title = isLoading
     ? APP_NAME
@@ -25,12 +39,27 @@ function Home() {
     : `Create Account | ${APP_NAME}`;
 
   useEffect(() => {
-    if (token.retrieve()) {
-      console.log('navigate to other page');
+    const token = _token.retrieve();
+
+    if (token) {
+      me();
     } else {
       setIsLoading(false);
     }
-  }, [setIsLoading]);
+  }, [me]);
+
+  useEffect(() => {
+    if (data) {
+      console.log('data:', data);
+      console.log('navigate to other page');
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      setIsLoading(false);
+    }
+  }, [error]);
 
   return (
     <>
