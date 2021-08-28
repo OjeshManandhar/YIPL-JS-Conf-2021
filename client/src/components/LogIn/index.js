@@ -1,7 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
+// next
+import { useRouter } from 'next/router';
+
 // packages
 import { gql, useLazyQuery } from '@apollo/client';
+
+// reactive var
+import User from 'reactiveVar/User';
 
 // utils
 import token from 'utils/token';
@@ -15,6 +21,7 @@ const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
+        id
         name
       }
     }
@@ -22,6 +29,8 @@ const LOGIN = gql`
 `;
 
 function LogIn(props) {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -53,9 +62,16 @@ function LogIn(props) {
     if (data) {
       token.save(data.login.token);
 
-      // navigate to tasks
+      const user = {
+        id: data.login.user.id,
+        name: data.login.user.name
+      };
+
+      User(user);
+
+      router.push('/tasks');
     }
-  }, [data]);
+  }, [data, router]);
 
   return (
     <G.FullScreenCenter>
