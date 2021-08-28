@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 
+// next
+import { useRouter } from 'next/router';
+
 // packages
 import { gql, useLazyQuery } from '@apollo/client';
 
@@ -26,6 +29,8 @@ const LOGIN = gql`
 `;
 
 function LogIn(props) {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -64,9 +69,9 @@ function LogIn(props) {
 
       User(user);
 
-      // navigate to tasks
+      router.push('/tasks');
     }
-  }, [data]);
+  }, [data, router]);
 
   return (
     <G.FullScreenCenter>

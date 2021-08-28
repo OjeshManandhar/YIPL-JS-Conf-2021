@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 
-// Next
+// next
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 // packages
 import { gql, useLazyQuery } from '@apollo/client';
+
+// reactive var
+import User from 'reactiveVar/User';
 
 // components
 import LogIn from 'components/LogIn';
@@ -27,6 +31,8 @@ const ME = gql`
 `;
 
 function Home() {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(true);
   const [isLogginIn, setIsLogginIn] = useState(true);
 
@@ -50,10 +56,16 @@ function Home() {
 
   useEffect(() => {
     if (data) {
-      console.log('data:', data);
-      console.log('navigate to other page');
+      const user = {
+        id: data.me.id,
+        name: data.me.name
+      };
+
+      User(user);
+
+      router.push('/tasks');
     }
-  }, [data]);
+  }, [data, router]);
 
   useEffect(() => {
     if (error) {
