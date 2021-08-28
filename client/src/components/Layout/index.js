@@ -1,5 +1,15 @@
+import { useCallback } from 'react';
+
 // next
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+// reactive var
+import User from 'reactiveVar/User';
+
+// utils
+import token from 'utils/token';
+import client from 'utils/apollo-client';
 
 // assets
 import logo from 'public/favicon-32x32.png';
@@ -8,6 +18,16 @@ import logo from 'public/favicon-32x32.png';
 import * as S from './styles';
 
 function Layout(props) {
+  const router = useRouter();
+
+  const logout = useCallback(() => {
+    User({});
+    token.save(null);
+    client.resetStore();
+
+    router.push('/');
+  }, [router]);
+
   return (
     <>
       <S.Header>
@@ -21,7 +41,8 @@ function Layout(props) {
             <Link href='/projects' passHref>
               <S.Link>Projects</S.Link>
             </Link>
-            <S.Logout>Log Out</S.Logout>
+
+            <S.Logout onClick={logout}>Log Out</S.Logout>
           </S.Links>
         </S.NavBar>
       </S.Header>
