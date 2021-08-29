@@ -6,6 +6,7 @@ import { gql, useQuery } from '@apollo/client';
 // components
 import Task from 'components/Task';
 import Loading from 'components/Loading';
+import CreateTask from 'components/CreateTask';
 
 // styles
 import * as S from './styles';
@@ -49,6 +50,8 @@ function Tasks() {
           </S.ListItem>
         ))}
       </S.List>
+
+      <CreateTask />
     </S.Container>
   );
 }
