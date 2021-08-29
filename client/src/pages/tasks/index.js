@@ -1,3 +1,6 @@
+// components
+import Task from 'components/Task';
+
 // styles
 import * as S from './styles';
 
@@ -24,7 +27,9 @@ function Tasks() {
     <S.Container>
       <S.List>
         {DUMMY_TASKS.map(t => (
-          <S.ListItem key={t.id}>{t.title}</S.ListItem>
+          <S.ListItem key={t.id}>
+            <Task task={t} />
+          </S.ListItem>
         ))}
       </S.List>
     </S.Container>

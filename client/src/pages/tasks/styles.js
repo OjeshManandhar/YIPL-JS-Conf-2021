@@ -5,16 +5,29 @@ import styled from 'styled-components';
 import * as G from 'global/styles';
 
 export const Container = styled(G.Container)`
-  width: var(--max-width);
+  width: calc(var(--max-width) / 2);
 
   margin: auto;
 `;
 
 export const List = styled.ul`
-  padding: 0;
   list-style-type: none;
+
+  border: 0.1rem solid var(--hookers-green);
+  border-radius: 1rem;
+
+  background-color: var(--dark-slate-gray);
 `;
 
 export const ListItem = styled.li`
-  margin-right: 2rem;
+  margin-bottom: 0.5rem;
+
+  padding: 1rem 2rem;
+
+  border-bottom: 0.1rem solid var(--hookers-green);
+  border-radius: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0rem;
+  }
 `;

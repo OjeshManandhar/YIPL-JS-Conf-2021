@@ -36,7 +36,6 @@ function ProtectedLayout(props) {
   }
 
   if (Object.keys(user).length === 0) {
-    token.save(null);
     client.resetStore();
     router.replace('/');
 
