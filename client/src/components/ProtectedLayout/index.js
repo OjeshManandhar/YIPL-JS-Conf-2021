@@ -2,17 +2,14 @@ import { useState, useEffect, useCallback } from 'react';
 
 // next
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useReactiveVar } from '@apollo/client';
 
 // packages
 import { gql, useLazyQuery } from '@apollo/client';
 
 // reactive var
 import User from 'reactiveVar/User';
-
-// components
-import SplashScreen from 'components/SplashScreen';
 
 // utils
 import _token from 'utils/token';
@@ -33,25 +30,25 @@ const ME = gql`
   }
 `;
 
+const SplashScreen = dynamic(() => import('components/SplashScreen'));
+
 function ProtectedLayout(props) {
   const router = useRouter();
-  const user = useReactiveVar(User);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [me, { error, data }] = useLazyQuery(ME);
 
-  console.log(' error, data:', isLoading, error, data);
-
   const logout = useCallback(() => {
     User({});
     _token.save(null);
-    client.resetStore();
 
     router.push('/');
   }, [router]);
 
   useEffect(() => {
+    const user = User();
+
     if (Object.keys(user).length === 0) {
       const token = _token.retrieve();
 
@@ -64,12 +61,12 @@ function ProtectedLayout(props) {
     } else {
       setIsLoading(false);
     }
-  }, [me, user, router]);
+  }, [me, router]);
 
   useEffect(() => {
     if (error) {
-      client.resetStore();
       router.replace('/');
+      client.resetStore();
     }
   }, [error, router]);
 

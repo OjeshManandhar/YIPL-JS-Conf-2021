@@ -93,11 +93,10 @@ function CreateProject({ refetch }) {
             name='status'
             required
             value={status}
+            defaultValue='RUNNING'
             onChange={e => setStatus(e.target.value)}
           >
-            <option value='RUNNING' selected>
-              RUNNING
-            </option>
+            <option value='RUNNING'>RUNNING</option>
             <option value='CLOSED'>CLOSED</option>
             <option value='CANCELLED'>CANCELLED</option>
           </G.FormSelect>
