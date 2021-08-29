@@ -1,38 +1,50 @@
+import { useEffect } from 'react';
+
+// packages
+import { gql, useQuery } from '@apollo/client';
+
 // components
 import Task from 'components/Task';
 
 // styles
 import * as S from './styles';
 
-const DUMMY_TASKS = [
-  {
-    id: 1,
-    title: 'Task 1',
-    description: '',
-    completed: false,
-    project: { id: 1, title: 'Test' }
-  },
-  {
-    id: 2,
-    title: 'Task 2',
-    description: 'Completed',
-    completed: true,
-    project: { id: 1, title: 'Test' }
-  },
-  {
-    id: 3,
-    title: 'Task 3',
-    description: 'Empty description',
-    completed: false,
-    project: { id: 2, title: 'Test 2' }
+const GET_TASKS = gql`
+  query Me {
+    me {
+      tasks {
+        id
+        title
+        description
+        completed
+        project {
+          id
+          title
+        }
+      }
+    }
   }
-];
+`;
 
 function Tasks() {
+  const { loading, error, data } = useQuery(GET_TASKS);
+
+  useEffect(() => {
+    if (error) {
+      window.alert(error.message);
+    }
+  }, [error]);
+
+  if (loading) return <div>Loading...</div>;
+
+  const tasks = data && data.me && data.me.tasks;
+
+  if (!loading && !tasks) return <div>Something is not right</div>;
+
   return (
     <S.Container>
       <S.List>
-        {DUMMY_TASKS.map(t => (
+        {tasks.map(t => (
           <S.ListItem key={t.id}>
             <Task task={t} />
           </S.ListItem>
