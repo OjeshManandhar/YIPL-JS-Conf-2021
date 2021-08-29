@@ -37,7 +37,7 @@ function CreateAccount(props) {
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState(null);
 
   const [createUser, { loading, error, data }] = useMutation(CREATE_USER);
 
@@ -192,6 +192,7 @@ function CreateAccount(props) {
               name='gender'
               type='text'
               required
+              value={gender}
               onChange={e => setGender(e.target.value)}
             >
               <option value={null} disabled selected>

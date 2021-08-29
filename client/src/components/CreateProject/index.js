@@ -20,7 +20,7 @@ function CreateProject({ refetch }) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('RUNNING');
+  const [status, setStatus] = useState(null);
 
   const clearForm = useCallback(() => {
     setTitle('');
@@ -93,9 +93,11 @@ function CreateProject({ refetch }) {
             name='status'
             required
             value={status}
-            defaultValue='RUNNING'
             onChange={e => setStatus(e.target.value)}
           >
+            <option value={null} disabled selected>
+              Select a project status
+            </option>
             <option value='RUNNING'>RUNNING</option>
             <option value='CLOSED'>CLOSED</option>
             <option value='CANCELLED'>CANCELLED</option>
