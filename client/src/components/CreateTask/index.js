@@ -1,13 +1,42 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+
+// packages
+import { gql, useQuery } from '@apollo/client';
 
 // styles
 import * as S from './styles';
 import * as G from 'global/styles';
 
+const LIST_PROJECTS = gql`
+  query ListProjects {
+    listProjects {
+      id
+      title
+    }
+  }
+`;
+
 function CreateTask() {
+  const ListProjects = useQuery(LIST_PROJECTS);
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [project, setProject] = useState(1);
+
+  const ProjectList = useCallback(() => {
+    if (ListProjects.data) {
+      const projects = ListProjects.data.listProjects;
+
+      return projects.map(p => (
+        <option key={p.id} value={p.id}>
+          {p.title}
+        </option>
+      ));
+    }
+
+    return [];
+  }, [ListProjects]);
+
+  console.log('project list:', ProjectList());
 
   return (
     <S.Container>
@@ -40,14 +69,7 @@ function CreateTask() {
 
         <G.FormControl>
           <G.FormLabel htmlFor='project'>Project</G.FormLabel>
-          <G.FormInput
-            id='project'
-            name='project'
-            type='project'
-            required
-            value={project}
-            onChange={e => setProject(e.target.value)}
-          />
+          <G.FormSelect>{ProjectList()}</G.FormSelect>
         </G.FormControl>
 
         <G.FormSubmit type='submit'>Create Task</G.FormSubmit>
