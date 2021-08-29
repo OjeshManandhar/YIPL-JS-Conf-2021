@@ -36,7 +36,6 @@ function ProtectedLayout(props) {
   }
 
   if (Object.keys(user).length === 0) {
-    token.save(null);
     client.resetStore();
     router.replace('/');
 
@@ -50,14 +49,20 @@ function ProtectedLayout(props) {
           <S.Image src={logo} alt='Task Manager' width={32} height={32} />
 
           <S.Links>
-            <Link href='/tasks' passHref>
-              <S.Link>Tasks</S.Link>
-            </Link>
-            <Link href='/projects' passHref>
-              <S.Link>Projects</S.Link>
-            </Link>
+            <S.Link>
+              <Link href='/tasks' passHref>
+                <S.A>Tasks</S.A>
+              </Link>
+            </S.Link>
+            <S.Link>
+              <Link href='/projects' passHref>
+                <S.A>Projects</S.A>
+              </Link>
+            </S.Link>
 
-            <S.Logout onClick={logout}>Log Out</S.Logout>
+            <S.Link>
+              <S.Logout onClick={logout}>Log Out</S.Logout>
+            </S.Link>
           </S.Links>
         </S.NavBar>
       </S.Header>

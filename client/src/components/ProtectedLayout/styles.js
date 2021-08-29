@@ -5,16 +5,7 @@ import _Image from 'next/image';
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  margin-bottom: 0.5rem;
-`;
-
-export const NavBar = styled.nav`
-  padding: 1.5rem 3rem;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  margin-bottom: 1.5rem;
 
   border-bottom: 0.25rem solid var(--ash-gray);
 
@@ -25,6 +16,18 @@ export const NavBar = styled.nav`
   box-shadow: 0rem 0rem 1.4rem 0rem rgba(175, 175, 175, 0.75);
   -moz-box-shadow: 0rem 0rem 1.4rem 0rem rgba(175, 175, 175, 0.75);
   -webkit-box-shadow: 0rem 0rem 1.4rem 0rem rgba(175, 175, 175, 0.75);
+`;
+
+export const NavBar = styled.nav`
+  width: var(--max-width);
+
+  margin: auto;
+  padding: 1.5rem 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
   /* For Image i.e. logo */
   & img {
@@ -41,9 +44,12 @@ export const Links = styled.ul`
   list-style-type: none;
 `;
 
-export const Link = styled.a`
+export const Link = styled.li`
+  display: inline;
   margin-right: 2rem;
+`;
 
+export const A = styled.a`
   transition: all 0.3s linear;
 
   &:hover,
