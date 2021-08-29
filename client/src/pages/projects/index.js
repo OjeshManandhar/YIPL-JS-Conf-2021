@@ -36,7 +36,6 @@ function Projects() {
   const projects = useMemo(() => data && data.listProjects, [data]);
 
   useEffect(() => {
-    ``;
     if (error) {
       window.alert(error.message);
     }
