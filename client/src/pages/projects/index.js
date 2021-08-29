@@ -5,6 +5,7 @@ import { gql, useQuery } from '@apollo/client';
 
 // components
 import Loading from 'components/Loading';
+import Project from 'components/Project';
 
 // styles
 import * as S from './styles';
@@ -34,7 +35,17 @@ function Projects() {
 
   if (loading) return <Loading />;
 
-  return <S.Container>{JSON.stringify(projects, null, 2)}</S.Container>;
+  return (
+    <S.Container>
+      <S.List>
+        {projects.map(p => (
+          <S.ListItem key={p.id}>
+            <Project project={p} />
+          </S.ListItem>
+        ))}
+      </S.List>
+    </S.Container>
+  );
 }
 
 export default Projects;
