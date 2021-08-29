@@ -6,14 +6,14 @@ import ProjectTag from 'components/ProjectTag';
 // styles
 import * as S from './styles';
 
-function Task(props) {
-  const task = props.task;
-
+function Task({ task, completeTask }) {
   const [checked, setChecked] = useState(task.completed);
 
   const toggleComplete = useCallback(() => {
     setChecked(prev => !prev);
-  }, []);
+
+    completeTask({ ...task, completed: !task.completed });
+  }, [task, completeTask]);
 
   return (
     <S.Container>
