@@ -25,8 +25,6 @@ const COMPLETE_TASK = gql`
 `;
 
 function Task({ task, refetch }) {
-  console.log('task:', task.id, task.title, task.completed, '\n');
-
   const [checked, setChecked] = useState(task.completed);
 
   const [completeTaskMutation, { loading, error, data }] =
@@ -51,10 +49,9 @@ function Task({ task, refetch }) {
       <S.Checkbox
         type='checkbox'
         checked={checked}
-        onChange={e => {
-          console.log(e.target.checked);
-          completeTaskMutation({ variables: { completeTaskId: task.id } });
-        }}
+        onChange={() =>
+          completeTaskMutation({ variables: { completeTaskId: task.id } })
+        }
         disabled={loading}
       />
 
