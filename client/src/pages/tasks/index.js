@@ -5,6 +5,7 @@ import { gql, useQuery } from '@apollo/client';
 
 // components
 import Task from 'components/Task';
+import Loading from 'components/Loading';
 
 // styles
 import * as S from './styles';
@@ -37,7 +38,7 @@ function Tasks() {
     }
   }, [error]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
 
   if (!loading && !tasks) return <div>Something is not right</div>;
 
