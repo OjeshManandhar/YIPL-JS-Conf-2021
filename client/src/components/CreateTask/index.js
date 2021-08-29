@@ -95,7 +95,7 @@ function CreateTask({ refetch }) {
     <S.Container>
       <G.Heading>Create Task</G.Heading>
 
-      <G.Form onSubmit={handleSubmit}>
+      <G.Form onSubmit={handleSubmit} autoComplete='off'>
         <G.FormControl>
           <G.FormLabel htmlFor='title'>Title</G.FormLabel>
           <G.FormInput

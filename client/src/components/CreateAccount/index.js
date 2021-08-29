@@ -37,7 +37,7 @@ function CreateAccount(props) {
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [gender, setGender] = useState('MALE');
+  const [gender, setGender] = useState('');
 
   const [createUser, { loading, error, data }] = useMutation(CREATE_USER);
 
@@ -105,7 +105,7 @@ function CreateAccount(props) {
       <S.Content>
         <G.Heading>Create Account</G.Heading>
 
-        <G.Form onSubmit={submitForm}>
+        <G.Form onSubmit={submitForm} autoComplete='off'>
           <G.FormControl>
             <G.FormLabel htmlFor='email'>Email</G.FormLabel>
             <G.FormInput
@@ -187,14 +187,20 @@ function CreateAccount(props) {
 
           <G.FormControl>
             <G.FormLabel htmlFor='gender'>Gender</G.FormLabel>
-            <G.FormInput
+            <G.FormSelect
               id='gender'
               name='gender'
               type='text'
               required
-              value={gender}
               onChange={e => setGender(e.target.value)}
-            />
+            >
+              <option value={null} disabled selected>
+                Select your gender
+              </option>
+              <option value='MALE'>MALE</option>
+              <option value='FEMALE'>FEMALE</option>
+              <option value='OTHER'>OTHER</option>
+            </G.FormSelect>
           </G.FormControl>
 
           <G.FormSubmit type='submit' disabled={loading}>
