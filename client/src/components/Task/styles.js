@@ -8,6 +8,11 @@ export const Container = styled.div`
   align-items: flex-start;
 `;
 
+export const Spinner = styled.div`
+  margin-top: 0.5rem;
+  margin-right: 0.1rem;
+`;
+
 export const Checkbox = styled.input`
   margin-top: 0.5rem;
   margin-right: 1rem;

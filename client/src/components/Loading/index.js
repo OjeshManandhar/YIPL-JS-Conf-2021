@@ -4,12 +4,12 @@ import Spinner from 'components/Spinner';
 // styles
 import * as G from 'global/styles';
 
-function SplashScreen() {
+function Loading() {
   return (
-    <G.FullScreenCenter>
+    <G.Center>
       <Spinner />
-    </G.FullScreenCenter>
+    </G.Center>
   );
 }
 
-export default SplashScreen;
+export default Loading;
