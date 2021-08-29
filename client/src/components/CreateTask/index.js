@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // packages
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useMutation } from '@apollo/client';
 
 // styles
 import * as S from './styles';
@@ -16,33 +16,86 @@ const LIST_PROJECTS = gql`
   }
 `;
 
-function CreateTask() {
+const CREATE_TASK = gql`
+  mutation CreateTask($createTaskData: CreateTaskInput!) {
+    createTask(data: $createTaskData) {
+      id
+    }
+  }
+`;
+
+function CreateTask({ refetch }) {
   const ListProjects = useQuery(LIST_PROJECTS);
+  const [createTask, { loading, error, data }] = useMutation(CREATE_TASK);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [projectId, setProjectId] = useState(null);
+
+  const clearForm = useCallback(() => {
+    setTitle('');
+    setDescription('');
+  }, []);
 
   const ProjectList = useCallback(() => {
     if (ListProjects.data) {
       const projects = ListProjects.data.listProjects;
 
-      return projects.map(p => (
-        <option key={p.id} value={p.id}>
-          {p.title}
+      const options = [
+        <option key={new Date()} value={null} disabled selected>
+          Select a project
         </option>
-      ));
+      ];
+
+      projects.forEach(p =>
+        options.push(
+          <option key={p.id} value={p.id}>
+            {p.title}
+          </option>
+        )
+      );
+
+      return options;
     }
 
     return [];
   }, [ListProjects]);
 
-  console.log('project list:', ProjectList());
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+
+      const createTaskData = {
+        title,
+        description: description.length > 0 ? description : null,
+        projectId
+      };
+
+      createTask({ variables: { createTaskData } });
+    },
+    [title, description, projectId, createTask]
+  );
+
+  useEffect(() => {
+    if (error) {
+      console.dir(error, { depth: null });
+
+      window.alert(error.message);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data) {
+      refetch();
+      clearForm();
+    }
+  }, [data, refetch, clearForm]);
 
   return (
     <S.Container>
       <G.Heading>Create Task</G.Heading>
 
-      <G.Form>
+      <G.Form onSubmit={handleSubmit}>
         <G.FormControl>
           <G.FormLabel htmlFor='title'>Title</G.FormLabel>
           <G.FormInput
@@ -69,10 +122,20 @@ function CreateTask() {
 
         <G.FormControl>
           <G.FormLabel htmlFor='project'>Project</G.FormLabel>
-          <G.FormSelect>{ProjectList()}</G.FormSelect>
+          <G.FormSelect
+            id='project'
+            name='project'
+            required
+            value={projectId}
+            onChange={e => setProjectId(e.target.value)}
+          >
+            {ProjectList()}
+          </G.FormSelect>
         </G.FormControl>
 
-        <G.FormSubmit type='submit'>Create Task</G.FormSubmit>
+        <G.FormSubmit type='submit' disabled={loading}>
+          Create Task
+        </G.FormSubmit>
       </G.Form>
     </S.Container>
   );

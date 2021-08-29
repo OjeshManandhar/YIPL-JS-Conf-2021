@@ -51,7 +51,7 @@ function Tasks() {
         ))}
       </S.List>
 
-      <CreateTask />
+      <CreateTask refetch={() => refetch()} />
     </S.Container>
   );
 }
