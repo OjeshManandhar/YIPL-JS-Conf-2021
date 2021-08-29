@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
 // components
+import Spinner from 'components/Spinner';
 import ProjectTag from 'components/ProjectTag';
 
 // styles
@@ -46,14 +47,20 @@ function Task({ task, refetch }) {
 
   return (
     <S.Container>
-      <S.Checkbox
-        type='checkbox'
-        checked={checked}
-        onChange={() =>
-          completeTaskMutation({ variables: { completeTaskId: task.id } })
-        }
-        disabled={loading}
-      />
+      {loading ? (
+        <S.Spinner>
+          <Spinner width='22px' height='22px' />
+        </S.Spinner>
+      ) : (
+        <S.Checkbox
+          type='checkbox'
+          checked={checked}
+          onChange={() =>
+            completeTaskMutation({ variables: { completeTaskId: task.id } })
+          }
+          disabled={loading}
+        />
+      )}
 
       <S.Info completed={task.completed}>
         <S.Title>{task.title}</S.Title>

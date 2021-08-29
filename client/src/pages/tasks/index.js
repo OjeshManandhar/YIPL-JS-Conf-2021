@@ -40,8 +40,6 @@ function Tasks() {
 
   if (loading) return <Loading />;
 
-  if (!loading && !tasks) return <div>Something is not right</div>;
-
   return (
     <S.Container>
       <S.List>
