@@ -2,6 +2,7 @@ import { useMemo, useEffect } from 'react';
 
 // next
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 // packages
 import { gql, useQuery } from '@apollo/client';
@@ -29,6 +30,7 @@ const GET_PROJECTS = gql`
 `;
 
 function Projects() {
+  const router = useRouter();
   const { loading, error, data, refetch } = useQuery(GET_PROJECTS);
 
   const projects = useMemo(() => data && data.listProjects, [data]);
@@ -51,7 +53,10 @@ function Projects() {
       <S.Container>
         <S.List>
           {projects.map(p => (
-            <S.ListItem key={p.id}>
+            <S.ListItem
+              key={p.id}
+              onClick={() => router.push(`/projects/${p.id}`)}
+            >
               <Project project={p} />
             </S.ListItem>
           ))}

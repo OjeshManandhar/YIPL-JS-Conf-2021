@@ -27,6 +27,8 @@ export const ListItem = styled.li`
   border-bottom: 0.1rem solid var(--hookers-green);
   border-radius: 0.5rem;
 
+  cursor: pointer;
+
   &:last-child {
     border-bottom: none;
     margin-bottom: 0rem;
