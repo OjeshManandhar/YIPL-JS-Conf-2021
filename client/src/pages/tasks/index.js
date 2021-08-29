@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo, useEffect } from 'react';
 
 // packages
 import { gql, useQuery } from '@apollo/client';
@@ -10,7 +10,7 @@ import Task from 'components/Task';
 import * as S from './styles';
 
 const GET_TASKS = gql`
-  query Me {
+  query GetTasks {
     me {
       tasks {
         id
@@ -27,29 +27,15 @@ const GET_TASKS = gql`
 `;
 
 function Tasks() {
-  const { loading, error, data } = useQuery(GET_TASKS);
+  const { loading, error, data, refetch } = useQuery(GET_TASKS);
 
-  const [tasks, setTasks] = useState([]);
+  const tasks = useMemo(() => data && data.me && data.me.tasks, [data]);
 
   useEffect(() => {
     if (error) {
       window.alert(error.message);
     }
   }, [error]);
-
-  useEffect(() => {
-    const tasks = data && data.me && data.me.tasks;
-
-    if (tasks) {
-      setTasks([...tasks]);
-    }
-  }, [data]);
-
-  const replaceTask = useCallback((id, newTask) => {
-    if (id !== newTask.id) return;
-
-    setTasks(prev => prev.map(t => (t.id === newTask.id ? newTask : t)));
-  }, []);
 
   if (loading) return <div>Loading...</div>;
 
@@ -60,10 +46,7 @@ function Tasks() {
       <S.List>
         {tasks.map(t => (
           <S.ListItem key={t.id}>
-            <Task
-              task={t}
-              completeTask={newTask => replaceTask(t.id, newTask)}
-            />
+            <Task task={t} refetch={() => refetch()} />
           </S.ListItem>
         ))}
       </S.List>
