@@ -103,7 +103,6 @@ function CreateTask({ refetch }) {
             name='title'
             type='title'
             required
-            autoFocus
             value={title}
             onChange={e => setTitle(e.target.value)}
           />
