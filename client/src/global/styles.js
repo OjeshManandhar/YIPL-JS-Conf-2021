@@ -79,6 +79,16 @@ export const FormInput = styled.input`
   font-size: 1.75rem;
 `;
 
+export const FormSelect = styled.select`
+  width: 30rem;
+
+  padding: 0.5rem;
+
+  font: inherit;
+
+  font-size: 1.75rem;
+`;
+
 export const FormSubmit = styled(Button)`
   margin-top: 1.5rem;
 `;
