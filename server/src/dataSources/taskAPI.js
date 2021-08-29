@@ -20,7 +20,25 @@ class TaskAPI extends DataSource {
       throw new ForbiddenError('Log in first');
     }
 
-    const createdTask = this.store.task.create({
+    const foundMember = await this.store.projectMembers.findUnique({
+      where: {
+        userId_projectId: {
+          userId: this.context.user.id,
+          projectId: data.projectId
+        }
+      }
+    });
+
+    if (!foundMember) {
+      await this.store.projectMembers.create({
+        data: {
+          userId: this.context.user.id,
+          projectId: data.projectId
+        }
+      });
+    }
+
+    const createdTask = await this.store.task.create({
       data: {
         ...data,
         creatorId: this.context.user.id
