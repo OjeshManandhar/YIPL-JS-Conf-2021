@@ -1,79 +1,46 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // packages
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 // styles
 import * as S from './styles';
 import * as G from 'global/styles';
 
-const LIST_PROJECTS = gql`
-  query ListProjects {
-    listProjects {
-      id
-      title
-    }
-  }
-`;
-
-const CREATE_TASK = gql`
-  mutation CreateTask($createTaskData: CreateTaskInput!) {
-    createTask(data: $createTaskData) {
+const CREATE_PROJECT = gql`
+  mutation CreateProject($createProjectData: CreateProjectInput!) {
+    createProject(data: $createProjectData) {
       id
     }
   }
 `;
 
-function CreateTask({ refetch }) {
-  const ListProjects = useQuery(LIST_PROJECTS);
-  const [createTask, { loading, error, data }] = useMutation(CREATE_TASK);
+function CreateProject({ refetch }) {
+  const [createProject, { loading, error, data }] = useMutation(CREATE_PROJECT);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [projectId, setProjectId] = useState(null);
+  const [status, setStatus] = useState('RUNNING');
 
   const clearForm = useCallback(() => {
     setTitle('');
     setDescription('');
+    setStatus('RUNNING');
   }, []);
-
-  const ProjectList = useCallback(() => {
-    if (ListProjects.data) {
-      const projects = ListProjects.data.listProjects;
-
-      const options = [
-        <option key={new Date()} value={null} disabled selected>
-          Select a project
-        </option>
-      ];
-
-      projects.forEach(p =>
-        options.push(
-          <option key={p.id} value={p.id}>
-            {p.title}
-          </option>
-        )
-      );
-
-      return options;
-    }
-
-    return [];
-  }, [ListProjects]);
 
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
 
-      const createTaskData = {
+      const createProjectData = {
         title,
         description: description.length > 0 ? description : null,
-        projectId
+        status
       };
 
-      createTask({ variables: { createTaskData } });
+      createProject({ variables: { createProjectData } });
     },
-    [title, description, projectId, createTask]
+    [title, description, status, createProject]
   );
 
   useEffect(() => {
@@ -93,7 +60,7 @@ function CreateTask({ refetch }) {
 
   return (
     <S.Container>
-      <G.Heading>Create Task</G.Heading>
+      <G.Heading>Create Project</G.Heading>
 
       <G.Form onSubmit={handleSubmit}>
         <G.FormControl>
@@ -120,24 +87,28 @@ function CreateTask({ refetch }) {
         </G.FormControl>
 
         <G.FormControl>
-          <G.FormLabel htmlFor='project'>Project</G.FormLabel>
+          <G.FormLabel htmlFor='status'>Status</G.FormLabel>
           <G.FormSelect
-            id='project'
-            name='project'
+            id='status'
+            name='status'
             required
-            value={projectId}
-            onChange={e => setProjectId(e.target.value)}
+            value={status}
+            onChange={e => setStatus(e.target.value)}
           >
-            {ProjectList()}
+            <option value='RUNNING' selected>
+              RUNNING
+            </option>
+            <option value='CLOSED'>CLOSED</option>
+            <option value='CANCELLED'>CANCELLED</option>
           </G.FormSelect>
         </G.FormControl>
 
         <G.FormSubmit type='submit' disabled={loading}>
-          Create Task
+          Create Project
         </G.FormSubmit>
       </G.Form>
     </S.Container>
   );
 }
 
-export default CreateTask;
+export default CreateProject;
