@@ -5,20 +5,26 @@ import Task from 'components/Task';
 import * as S from './styles';
 
 const DUMMY_TASKS = [
-  { id: 1, title: 'Task 1', description: '', completed: false, projectId: 1 },
+  {
+    id: 1,
+    title: 'Task 1',
+    description: '',
+    completed: false,
+    project: { id: 1, title: 'Test' }
+  },
   {
     id: 2,
     title: 'Task 2',
     description: 'Completed',
     completed: true,
-    projectId: 1
+    project: { id: 1, title: 'Test' }
   },
   {
     id: 3,
     title: 'Task 3',
     description: 'Empty description',
     completed: false,
-    projectId: 2
+    project: { id: 2, title: 'Test 2' }
   }
 ];
 

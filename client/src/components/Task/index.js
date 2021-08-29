@@ -1,5 +1,8 @@
 import { useState, useCallback } from 'react';
 
+// components
+import ProjectTag from 'components/ProjectTag';
+
 // styles
 import * as S from './styles';
 
@@ -22,7 +25,7 @@ function Task(props) {
         {task.description && <S.Description>{task.description}</S.Description>}
       </S.Info>
 
-      <div style={{ marginLeft: 'auto' }}>{task.projectId}</div>
+      <ProjectTag project={task.project} />
     </S.Container>
   );
 }

@@ -28,6 +28,7 @@ export const ListItem = styled.li`
   border-radius: 0.5rem;
 
   &:last-child {
+    border-bottom: none;
     margin-bottom: 0rem;
   }
 `;
