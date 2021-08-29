@@ -6,24 +6,12 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-`;
-
-export const Spinner = styled.div`
-  margin-top: 0.5rem;
-  margin-right: 0.1rem;
-`;
-
-export const Checkbox = styled.input`
-  margin-top: 0.5rem;
-  margin-right: 1rem;
 
   cursor: pointer;
 `;
 
 export const Info = styled.div`
   font-size: 1.6rem;
-
-  text-decoration: ${props => (props.completed ? 'line-through' : 'none')};
 `;
 
 export const Title = styled.span`
@@ -36,4 +24,16 @@ export const Description = styled.p`
   color: var(--ash-gray);
 
   margin-top: 0.5rem;
+`;
+
+export const Status = styled.div`
+  font-size: 1.5rem;
+
+  margin-left: auto;
+  padding: 0.1rem 1.25rem;
+
+  border-radius: 1rem;
+  border: 0.1rem solid var(--hookers-green);
+
+  background-color: var(--charcoal);
 `;

@@ -17,6 +17,7 @@ import CreateAccount from 'components/CreateAccount';
 
 // utils
 import _token from 'utils/token';
+import client from 'utils/apollo-client';
 
 // env
 import { APP_NAME } from 'env_config';
@@ -50,6 +51,7 @@ function Home() {
     if (token) {
       me();
     } else {
+      client.resetStore();
       setIsLoading(false);
     }
   }, [me]);
