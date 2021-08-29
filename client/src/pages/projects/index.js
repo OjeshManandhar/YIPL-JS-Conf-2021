@@ -9,6 +9,7 @@ import { gql, useQuery } from '@apollo/client';
 // components
 import Loading from 'components/Loading';
 import Project from 'components/Project';
+import CreateProject from 'components/CreateProject';
 
 // styles
 import * as S from './styles';
@@ -28,7 +29,7 @@ const GET_PROJECTS = gql`
 `;
 
 function Projects() {
-  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const { loading, error, data, refetch } = useQuery(GET_PROJECTS);
 
   const projects = useMemo(() => data && data.listProjects, [data]);
 
@@ -55,6 +56,8 @@ function Projects() {
             </S.ListItem>
           ))}
         </S.List>
+
+        <CreateProject refetch={() => refetch()} />
       </S.Container>
     </>
   );
