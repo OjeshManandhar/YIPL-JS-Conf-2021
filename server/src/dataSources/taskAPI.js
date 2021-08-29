@@ -47,7 +47,7 @@ class TaskAPI extends DataSource {
 
     const updatedTask = await this.store.task.update({
       where: { id },
-      data: { completed: true }
+      data: { completed: !foundTasks[0].completed }
     });
 
     return updatedTask;
