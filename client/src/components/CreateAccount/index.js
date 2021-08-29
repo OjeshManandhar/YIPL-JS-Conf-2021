@@ -1,7 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
+// next
+import { useRouter } from 'next/router';
+
 // packages
 import { gql, useMutation } from '@apollo/client';
+
+// reactive var
+import User from 'reactiveVar/User';
 
 // utils
 import token from 'utils/token';
@@ -15,6 +21,7 @@ const CREATE_USER = gql`
     createUser(data: $createUserData) {
       token
       user {
+        id
         name
       }
     }
@@ -22,11 +29,13 @@ const CREATE_USER = gql`
 `;
 
 function CreateAccount(props) {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState(null);
+  const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('MALE');
 
@@ -51,7 +60,7 @@ function CreateAccount(props) {
         password,
         confirmPassword,
         firstName,
-        middleName,
+        middleName: middleName.length > 0 ? middleName : null,
         lastName,
         gender
       };
@@ -80,9 +89,16 @@ function CreateAccount(props) {
     if (data) {
       token.save(data.createUser.token);
 
-      // navigate to tasks
+      const user = {
+        id: data.createUser.user.id,
+        name: data.createUser.user.name
+      };
+
+      User(user);
+
+      router.push('/tasks');
     }
-  }, [data]);
+  }, [data, router]);
 
   return (
     <G.FullScreenCenter>

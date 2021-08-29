@@ -5,6 +5,8 @@
   --hookers-green: #52796f;
   --dark-slate-gray: #354f52;
   --charcoal: #2f3e46;
+
+  --max-width: 100rem;
 }
 
 html {
